@@ -1,57 +1,46 @@
+//show options
+const computer_option_span = document.querySelector("#computer_option");
+const player_option_span = document.querySelector("#player_option");
+//show score
+const computer_score_span = document.querySelector("#computer_score");
+const player_score_span = document.querySelector("#player_score");
+//show winner
+const winner_span = document.querySelector("#winner_result");
+//buttons
+const btn_rock = document.querySelector("#rock");
+const btn_paper = document.querySelector("#paper");
+const btn_scissors = document.querySelector("#scissors");
+
+let computerScore = 0;
+let playerScore = 0;
+
+btn_rock.addEventListener("click", () => {
+  const playerChoice = btn_rock.id;
+  const computerChoice = getComputerChoice();
+  showGame(playerChoice, computerChoice);
+});
+
+btn_paper.addEventListener("click", () => {
+  const playerChoice = btn_paper.id;
+  const computerChoice = getComputerChoice();
+  showGame(playerChoice, computerChoice);
+});
+
+btn_scissors.addEventListener("click", () => {
+  const playerChoice = btn_scissors.id;
+  const computerChoice = getComputerChoice();
+  showGame(playerChoice, computerChoice);
+});
+
 const rpsArr = ["rock", "paper", "scissors"];
 
 const getComputerChoice = () => {
   return ["rock", "paper", "scissors"][Math.floor(Math.random() * 3)];
 };
 
-const getPlayerChoice = () => {
-  const playerChoice = prompt(
-    "Enter rock, paper, or scissors to play the game."
-  );
-  return playerChoice;
-};
-
-function startGame() {
-  let computerWins = 0;
-  let playerWins = 0;
-  for (let i = 1; i <= 5; i++) {
-    const computerChoice = getComputerChoice();
-    const playerChoice = getPlayerChoice();
-    if (playerChoice != "") {
-      const playerOption = playerChoice.toLowerCase();
-      if (rpsArr.includes(playerOption)) {
-        const result = playRPS(computerChoice, playerOption);
-        if (result === "computer") {
-          computerWins += 1;
-        }
-        if (result === "player") {
-          playerWins += 1;
-        }
-        console.log(
-          `Computer choice: ${computerChoice} Player choice: ${playerChoice}`
-        );
-        console.log(`Winner: ${result}`);
-      } else {
-        console.log("Invalid option");
-      }
-    } else {
-      console.log("Invalid option");
-    }
-  }
-  if (computerWins === playerWins) {
-    return `Tied game! Computer: ${computerWins} Player: ${playerWins}`;
-  } else if (computerWins > playerWins) {
-    return `Computer is the winner! 
-          Computer: ${computerWins} Player: ${playerWins}`;
-  } else {
-    return `Player is the winner! 
-          Computer: ${computerWins} Player: ${playerWins}`;
-  }
-}
-
-function playRPS(computerOption, playerOption) {
+function playGame(computerOption, playerOption) {
   if (computerOption === playerOption) {
-    return "Tied round!";
+    return "tied round!";
   } else if (
     (computerOption === rpsArr[0] && playerOption === rpsArr[2]) ||
     (computerOption === rpsArr[1] && playerOption === rpsArr[0]) ||
@@ -63,4 +52,48 @@ function playRPS(computerOption, playerOption) {
   }
 }
 
-console.log(startGame());
+function showWinner(computerPoints, playerPoints) {
+  if (playerPoints === 5 && computerPoints === 5) {
+    winner_span.textContent = "Tied game!";
+    computer_score_span.textContent = "";
+    player_score_span.textContent = "";
+    playerScore = 0;
+    computerScore = 0;
+  }
+  if (playerPoints === 5) {
+    winner_span.textContent = "Player";
+    computer_score_span.textContent = "";
+    player_score_span.textContent = "";
+    playerScore = 0;
+    computerScore = 0;
+  }
+  if (computerPoints === 5) {
+    winner_span.textContent = "Computer";
+    computer_score_span.textContent = "";
+    player_score_span.textContent = "";
+    playerScore = 0;
+    computerScore = 0;
+  }
+}
+function showGame(playerChoice, computerChoice) {
+  if (winner_span.textContent !== "") {
+    winner_span.textContent = "";
+  }
+
+  computer_option_span.textContent = computerChoice;
+  player_option_span.textContent = playerChoice;
+  //Llamar a la función para jugar.
+  const result = playGame(computerChoice, playerChoice);
+  //Actualizar los contadores
+  if (result === "computer") {
+    computerScore += 1;
+  }
+  if (result === "player") {
+    playerScore += 1;
+  }
+  //Mostrar el score en el span
+  computer_score_span.textContent = computerScore;
+  player_score_span.textContent = playerScore;
+
+  showWinner(computerScore, playerScore);
+}

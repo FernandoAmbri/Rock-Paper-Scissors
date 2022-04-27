@@ -4,15 +4,30 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <script type="text/javascript" src="main.js" defer></script>
   <title>Rock, Paper or Scissors</title>
-  <style>
-    .title {
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
   <div class="title"><h1>Rock, Paper, or Scissors</h1></div>
+  <div class="choices">
+    <div class="computer">Computer choice: <span id="computer_option"></span></div>
+    <div class="player">Player choice: <span id="player_option"></span></div>
+  </div>
+
+  <div class="score">
+    <div class="computer">Computer score: <span id="computer_score">0</span></div>
+    <div class="player">Player score: <span id="player_score">0</span></div>
+  </div>
+
+  <div class="show_winner">
+    <div class="winner">Winner: <span id="winner_result"></span></div>
+  </div>
+  
+  <div class="button">
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+  </div>
 </body>
 </html>
