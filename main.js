@@ -6,9 +6,11 @@ const computer_score_span = document.querySelector("#computer_score");
 const player_score_span = document.querySelector("#player_score");
 //show winner
 const winner_span = document.querySelector("#winner_result");
+const spanArr = document.querySelectorAll("span");
 //buttons
 const buttons = document.querySelectorAll("button");
 const btn_restart = document.querySelector("#restart");
+
 const rpsArr = ["rock", "paper", "scissors"];
 let computerScore = 0;
 let playerScore = 0;
@@ -52,11 +54,9 @@ function startGame(playerChoice, computerChoice) {
 }
 
 function restartGame() {
-  winner_span.textContent = "";
-  computer_option_span.textContent = "";
-  player_option_span.textContent = "";
-  computer_score_span.textContent = "";
-  player_score_span.textContent = "";
+  spanArr.forEach((span) => {
+    span.textContent = "";
+  });
   playerScore = 0;
   computerScore = 0;
 }
