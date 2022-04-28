@@ -7,32 +7,11 @@ const player_score_span = document.querySelector("#player_score");
 //show winner
 const winner_span = document.querySelector("#winner_result");
 //buttons
-const btn_rock = document.querySelector("#rock");
-const btn_paper = document.querySelector("#paper");
-const btn_scissors = document.querySelector("#scissors");
-
+const buttons = document.querySelectorAll("button");
+const btn_restart = document.querySelector("#restart");
+const rpsArr = ["rock", "paper", "scissors"];
 let computerScore = 0;
 let playerScore = 0;
-
-btn_rock.addEventListener("click", () => {
-  const playerChoice = btn_rock.id;
-  const computerChoice = getComputerChoice();
-  showGame(playerChoice, computerChoice);
-});
-
-btn_paper.addEventListener("click", () => {
-  const playerChoice = btn_paper.id;
-  const computerChoice = getComputerChoice();
-  showGame(playerChoice, computerChoice);
-});
-
-btn_scissors.addEventListener("click", () => {
-  const playerChoice = btn_scissors.id;
-  const computerChoice = getComputerChoice();
-  showGame(playerChoice, computerChoice);
-});
-
-const rpsArr = ["rock", "paper", "scissors"];
 
 const getComputerChoice = () => {
   return ["rock", "paper", "scissors"][Math.floor(Math.random() * 3)];
@@ -52,48 +31,60 @@ function playGame(computerOption, playerOption) {
   }
 }
 
+function startGame(playerChoice, computerChoice) {
+  if (computerScore < 5 && playerScore < 5) {
+    computer_option_span.textContent = computerChoice;
+    player_option_span.textContent = playerChoice;
+
+    const result = playGame(computerChoice, playerChoice);
+
+    if (result === "computer") {
+      computerScore += 1;
+    }
+    if (result === "player") {
+      playerScore += 1;
+    }
+    computer_score_span.textContent = computerScore;
+    player_score_span.textContent = playerScore;
+
+    showWinner(computerScore, playerScore);
+  }
+}
+
+function restartGame() {
+  winner_span.textContent = "";
+  computer_option_span.textContent = "";
+  player_option_span.textContent = "";
+  computer_score_span.textContent = "";
+  player_score_span.textContent = "";
+  playerScore = 0;
+  computerScore = 0;
+}
+
 function showWinner(computerPoints, playerPoints) {
   if (playerPoints === 5 && computerPoints === 5) {
-    winner_span.textContent = "Tied game!";
-    computer_score_span.textContent = "";
-    player_score_span.textContent = "";
-    playerScore = 0;
-    computerScore = 0;
+    winner_span.textContent = "Tied Game!";
   }
   if (playerPoints === 5) {
     winner_span.textContent = "Player";
-    computer_score_span.textContent = "";
-    player_score_span.textContent = "";
-    playerScore = 0;
-    computerScore = 0;
   }
   if (computerPoints === 5) {
     winner_span.textContent = "Computer";
-    computer_score_span.textContent = "";
-    player_score_span.textContent = "";
-    playerScore = 0;
-    computerScore = 0;
   }
 }
-function showGame(playerChoice, computerChoice) {
-  if (winner_span.textContent !== "") {
-    winner_span.textContent = "";
-  }
 
-  computer_option_span.textContent = computerChoice;
-  player_option_span.textContent = playerChoice;
-  //Llamar a la función para jugar.
-  const result = playGame(computerChoice, playerChoice);
-  //Actualizar los contadores
-  if (result === "computer") {
-    computerScore += 1;
-  }
-  if (result === "player") {
-    playerScore += 1;
-  }
-  //Mostrar el score en el span
-  computer_score_span.textContent = computerScore;
-  player_score_span.textContent = playerScore;
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (button.id !== "restart") {
+      const playerChoice = button.id;
+      const computerChoice = getComputerChoice();
+      startGame(playerChoice, computerChoice);
+    }
+  });
+});
 
-  showWinner(computerScore, playerScore);
-}
+btn_restart.addEventListener("click", () => {
+  if (computerScore >= 5 || playerScore >= 5) {
+    restartGame();
+  }
+});

@@ -34,8 +34,15 @@ button {
   padding: 8px 28px;
   margin-right: 10px;
   font-family: 'Poppins', sans-serif;
-  background: lightblue;
+  font-weight: bold;
+  font-size: 18px;
+  background: royalblue;
+  color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+span {
+  font-weight: bold;
 }
